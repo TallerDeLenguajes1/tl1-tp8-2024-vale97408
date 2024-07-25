@@ -2,6 +2,7 @@
 
 
 using GestionTareas;
+using EspacioCalculadora;
 
 Console.WriteLine("=======TP4- LISTAS Y CLASES CON C#==========");
 Console.WriteLine("---EJERCICIO 1-----");
@@ -106,3 +107,106 @@ do{
             }
     
  }while(operacion!=6);
+
+
+ Console.WriteLine("-------EJERCICIO 2-------");
+
+ // lista 
+ Calculadora nuevaCalculadora = new Calculadora();
+
+ int control;
+        Console.WriteLine("\n=============CALCULADORA===============\n");
+        do
+        {
+            Console.WriteLine("\n1)Suma");
+            Console.WriteLine("\n2) Resta");
+            Console.WriteLine("\n3) Multiplicacion");
+            Console.WriteLine("\n4)Division");
+            Console.WriteLine("\n5)Limpiar");
+            Console.WriteLine("\n6)Historial");
+            Console.WriteLine("\nOperacion a realizar: ");
+            //string Respuesta = Console.ReadLine();
+
+            double num = 0;
+            int valorOperacion;
+
+            if (int.TryParse(Console.ReadLine(), out valorOperacion))
+            {
+                if (valorOperacion <= 6 && valorOperacion > 0)
+                {
+                    if (valorOperacion != 5)
+                    {
+                        //string numero1;
+                        do
+                        {
+                            Console.WriteLine("\nIngrese el primer numero: ");
+                           // numero1 = Console.ReadLine();
+                        } while (!double.TryParse(Console.ReadLine(), out num));
+                    }
+
+                    switch (valorOperacion)
+                    {
+                        case 1:
+                            nuevaCalculadora.Sumar(num);
+                            Console.WriteLine("\nLa suma de los numeros es " + nuevaCalculadora.Resultado);
+                            break;
+                        case 2:
+                            nuevaCalculadora.Resta(num);
+                            Console.WriteLine("\nLa diferencia de los numeros es " + nuevaCalculadora.Resultado);
+                            break;
+                        case 3:
+                            nuevaCalculadora.Multiplicacion(num);
+                            Console.WriteLine("\nEl producto de los numeros es " + nuevaCalculadora.Resultado);
+                            break;
+                        case 4:
+                            nuevaCalculadora.Division(num);
+                            Console.WriteLine("\nEl cociente de los numeros es " + nuevaCalculadora.Resultado);
+                            break;
+                        case 5:
+                             nuevaCalculadora.Limpiar();
+                            Console.WriteLine("\nEl dato limpio es: " + nuevaCalculadora.Resultado);
+                            break;
+                        case 6:
+                             int m=1;
+
+                              if (nuevaCalculadora.Historial != null)
+                              {
+
+                             foreach(Calculadora.Operacion oper in nuevaCalculadora.Historial)
+                             {
+                                Console.WriteLine($"\n--Operacion Nro {m}");
+                                Console.WriteLine($"\nDato de entrada: {oper.ResultadoAnterior}");
+                                Console.WriteLine($"\n Operacion realizada: : {oper.OperacionRealizar}");
+                                Console.WriteLine($"\nResultado: {oper.NuevoValor}");
+                                
+                                m++;
+
+                             }
+
+                              } else
+                              {
+                                Console.WriteLine($"Historial vacio.");
+                               }
+                              break;
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\nOperacion invalida (1-6)");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\n Nro ingresado invalido.");
+            }
+
+            Console.WriteLine("\nDesea seguir operando? 1)Si/ 0)No");
+            //string seguirOperando = Console.ReadLine();
+            if (!int.TryParse(Console.ReadLine(), out control))
+            {
+                control = 1;
+            }
+
+        } while (control != 0);
+ 
