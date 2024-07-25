@@ -1,22 +1,33 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 
-using GestionTareas
+using GestionTareas;
 
 Console.WriteLine("=======TP4- LISTAS Y CLASES CON C#==========");
 Console.WriteLine("---EJERCICIO 1-----");
 
-
-
-GestorDeTareas GestorTareas = new GestorDeTareas();
-List<Tareas> ListaTareasPendientes = new List<Tareas>();
-List<Tareas> ListaTareasRealizadas = new List<Tareas>();
-string op;
+//int op;
 int operacion;
+
+// Listas
+GestorDeTareas GestorTareas = new GestorDeTareas();
+List<Tarea> ListaTareasPendientes = new List<Tarea>();
+List<Tarea> ListaTareasRealizadas = new List<Tarea>();
+
+string op;
 do{
     do
     {
-        Console.WriteLine("\nIndique que tarea desea realizar: \n1.Agregar Tareas\n2.Mostrar Lista de tareas pendientes\n3.Mostrar Lista de tareas realizadas\n4.Tranferir tarea de pendientes a realizado\n5.Buscar tarea por palabra clave\n6.Finalizar");
+  
+         Console.WriteLine("\n\n------OPERACIONES A REALIZAR-----");
+      Console.WriteLine("1). Agregar una nueva tarea a Pendientes");
+      Console.WriteLine("2). Mostrar lista de tareas pendientes");
+      Console.WriteLine("3). Mostrar lista de tareas realizadas");
+      Console.WriteLine("4). Transferir tareas de la lista Pendientes a Realizadas por ID");
+      Console.WriteLine("5). Buscar Tarea Por palabra  clave");
+      Console.WriteLine("6). Finalizar");
+      Console.WriteLine("Seleccione una opcion: ");
+        
         op = Console.ReadLine();
         
     } while (!int.TryParse(op, out operacion));
@@ -24,9 +35,10 @@ do{
     switch (operacion)
     {
     case 1:
-            Console.WriteLine("\nIndique la cantidad de tareas que desea ingresar");
+            Console.WriteLine("\nTAREAS QUE DESEA INGRESAR:");
             int cantidad;
             string ingresa;
+
             do
             {
                 ingresa = Console.ReadLine();
@@ -34,28 +46,32 @@ do{
                 {
                     Console.WriteLine("\nNo ha ingresado una cantidad valida");
                 }
+
             } while (!int.TryParse(ingresa, out cantidad));
             ListaTareasPendientes = GestorTareas.crearNTareas(cantidad);
+
            break;
+
     case 2:
             int j = 0;
-            Console.WriteLine("\nTareas pendientes");
-            foreach (Tareas tarea in ListaTareasPendientes)
+            Console.WriteLine("\n---Tareas pendientes");
+            foreach (Tarea tarea in ListaTareasPendientes)
             {
                 j++;
                 Console.WriteLine($"\nTarea {j}");
-                Console.WriteLine($"\nID: {tarea.TareaID}");
+                Console.WriteLine($"\nID: {tarea.ID}");
                 Console.WriteLine($"\nDescripcion: {tarea.Descripcion}");
                 Console.WriteLine($"\nDuracion: {tarea.Duracion}");
             }
             break;
     case 3:
-            int k = 0;
-            foreach (Tareas tarea in ListaTareasRealizadas)
+            int m = 0;
+            Console.WriteLine("\n---Tareas realizadas");
+            foreach (Tarea tarea in ListaTareasRealizadas)
             {
-                k++;
-                Console.WriteLine($"\nTarea {k}");
-                Console.WriteLine($"\nID: {tarea.TareaID}");
+                m++;
+                Console.WriteLine($"\nTarea {m}");
+                Console.WriteLine($"\nID: {tarea.ID}");
                 Console.WriteLine($"\nDescripcion: {tarea.Descripcion}");
                 Console.WriteLine($"\nDuracion: {tarea.Duracion}");
             }
@@ -66,27 +82,27 @@ do{
             do
             {
                 
-                Console.WriteLine("\nIngrese el id de la tarea que desea marcar como realizado y transferirlo a la lista correspondiente: ");
+                Console.WriteLine("\nID de la tarea que desea tranferir a TAREAS REALIZADAS: ");
                 id = Console.ReadLine();
             } while (!int.TryParse(id, out Id));
 
-            GestorTareas.TranferirTareaRealizadaporId(ListaTareasPendientes,ListaTareasRealizadas,Id);
+            GestorTareas.moverTareasARealizadasId(ListaTareasPendientes,ListaTareasRealizadas,Id);
             break;
     case 5:
-            Console.WriteLine("\nIngrese la descripcion de la tarea que desea buscar");
+            Console.WriteLine("\nDescripcion de la tarea a buscar");
             string descripcion = Console.ReadLine();
-            Tareas TareaBuscada = GestorTareas.BuscarTareaPorDescripcion(ListaTareasPendientes,descripcion);
+            Tarea TareaBuscada = GestorTareas.BuscarTareaPorDescripcion(ListaTareasPendientes,descripcion);
             if(TareaBuscada != null)
             {
-                Console.WriteLine("\nLa tarea buscada es: ");
-                Console.WriteLine($"\nID: {TareaBuscada.TareaID}");
-                Console.WriteLine($"\nDescripcion: {TareaBuscada.Descripcion}");
-                Console.WriteLine($"\nDuracion: {TareaBuscada.Duracion}");
+                Console.WriteLine("\n-Tarea: ");
+                Console.WriteLine($"\n-ID: {TareaBuscada.ID}");
+                Console.WriteLine($"\n-Descripcion: {TareaBuscada.Descripcion}");
+                Console.WriteLine($"\n-Duracion: {TareaBuscada.Duracion}");
             }else
             {
                 Console.WriteLine("\nLa descripcion ingresada no se corresponde con ninguna tarea");
             }
             break;
-    }
-}while(operacion!=6);
-
+            }
+    
+ }while(operacion!=6);
